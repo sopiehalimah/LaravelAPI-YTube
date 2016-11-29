@@ -43,7 +43,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
           break;
         case 'youtube#channel':
           $channels .= sprintf('<li>%s (%s)</li>',
-              $searchResult['snippet']['title'], $searchResult['id']['channelId']);
+              $searchResult['snippet']['title'], $searchResult['id']['channelId']."<a href=http://www.youtube.com/channel/".$searchResult['id']['channelId']." target=_blank>   Direct Channel</a>");
           break;
         case 'youtube#playlist':
           $playlists .= sprintf('<li>%s (%s)</li>',
@@ -75,21 +75,43 @@ END;
 <html>
   <head>
     <title>YouTube Search</title>
-<link href="//www.w3resource.com/includes/bootstrap.css" rel="stylesheet">
-<style type="text/css">
-body{margin-top: 50px; margin-left: 50px}
-</style>
+    <link href="{{url('css/bootstrap.min.css')}}" rel="stylesheet">
+
+
   </head>
   <body>
-  <form method="GET">
-  <div>
-    Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term">
-  </div>
-  <div>
-    Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="25">
-  </div>
-  <input type="submit" value="Search">
-</form>
-    <?=$htmlBody?>
+
+  <form method="GET" class="form-horizontal">
+  <div class="form-group " style="width: 80%; margin-left: 200px; ">
+  <h1 style="color: #b71c1c;">You <small>Tube</small></h1>
+  <div class="row">
+    <div class="col-xs-8">
+      <input type="search" id="q" name="q" class="form-control" placeholder="Enter Search Term">
+    </div>
+    <div class="col-xs-8">
+      Max Results: <input type="number" id="maxResults" class="form-control" name="maxResults" min="1" max="50" step="1" value="25">
+    </div>
+
+    <div class="col-xs-8" style="margin-top: 10px;">
+      <button type="submit" class="btn btn-danger">Search</button>
+    </div>
+  </div> 
+  <small> 
+      @if(Request::input('q') == "")
+        
+      @else
+        <?= $htmlBody ?>
+      @endif
+  </small>
+
+  </div>    
+  </form>
+
+
+
+
+
+    
 </body>
 </html>
+
